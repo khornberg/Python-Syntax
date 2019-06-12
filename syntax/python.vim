@@ -1,3 +1,5 @@
+if !exists('g:polyglot_disabled') || index(g:polyglot_disabled, 'python') == -1
+
 " Vim syntax file
 " Language: Python
 " Maintainer: Ian McCracken <ian.mccracken@gmail.com>
@@ -96,6 +98,7 @@ syn keyword pythonStatement exec return
 syn keyword pythonStatement pass print raise
 syn keyword pythonStatement global assert
 syn keyword pythonStatement yield lambda
+syn keyword pythonStatement async await
 syn keyword pythonStatement with
 
 " Class definitions
@@ -106,7 +109,7 @@ syn region  pythonSuperclasses start="("ms=s+1 end=")"me=e-1 keepend contained c
 syn match   pythonSuperclass "[a-zA-Z_][a-zA-Z_0-9]*" contained
 
 " Function definitions
-syn region  pythonFunc start="^\s*def\>" end=")\s*:" keepend contains=pythonFuncDef,pythonFuncName,pythonFuncParams
+syn region  pythonFunc start="\s*def\>" end=")\s*:" keepend contains=pythonFuncDef,pythonFuncName,pythonFuncParams,pythonStatement
 syn keyword pythonFuncDef def contained nextgroup=pythonFuncName skipwhite
 syn match   pythonFuncName  "[a-zA-Z_][a-zA-Z0-9_]*" display contained nextgroup=pythonFuncParams skipwhite
 syn region  pythonFuncParams start="("ms=s+1 end=")"me=e-1 contained transparent contains=pythonParam
@@ -328,6 +331,7 @@ if version >= 508 || !exists("did_python_syn_inits")
     command -nargs=+ HiLink hi def link <args>
   endif
 
+  HiLink pythonFuncPre     Statement
   HiLink pythonFuncDef     Statement
   HiLink pythonFuncName    Entity
   HiLink pythonParamName Test
@@ -400,3 +404,5 @@ if version >= 508 || !exists("did_python_syn_inits")
 endif
 
 let b:current_syntax = "python"
+
+endif
